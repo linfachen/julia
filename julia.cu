@@ -27,12 +27,25 @@ __global__ void julia(unsigned char * out, float c_rel,float c_im,float x0, floa
 
 
 
-int main()
+int main(int argc,char **argv)
 {
+    
+    if(argc!=3){
+        printf("you must give 2 args");
+        return 0;
+    }
+    
+    float x,y;
+    
+    x=atof(argv[1]);
+    y=atof(argv[2]);
+    
+    
+    
     int thread_x=16;
     int thread_y=16;   
-    int block_x=16;
-    int block_y=16;    
+    int block_x=32;
+    int block_y=32;    
     
     int w=thread_x*block_x;
     int h=thread_y*block_y;
@@ -48,8 +61,7 @@ int main()
     
     memset(out,0,pic_size);
     
-    float x=0.25;
-    float y=0.3;
+
 
     
     unsigned char * dev_out;
@@ -65,7 +77,7 @@ int main()
     cudaMemcpy(out, dev_out, pic_size, cudaMemcpyDeviceToHost);
   
     char filename[200];
-    sprintf(filename,".//julia_%0.2f_%0.2f.bin",x,y);
+    sprintf(filename,".//julia_%0.3f_%0.3f.bin",x,y);
     FILE * f=fopen(filename,"wb");
     if(f){
         fwrite(out,1,pic_size,f);
