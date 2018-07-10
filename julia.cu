@@ -59,13 +59,13 @@ int main()
     
     dim3 block(block_x,block_y),thread(thread_x,thread_y,1);
  
-    julia<<<block,thread>>>(out,x,y,-1,1,-1,1,w,h,1000);
+    julia<<<block,thread>>>(dev_out,x,y,-1,1,-1,1,w,h,1000);
     
     
-    cudaMemcpy(dev_out, out, pic_size, cudaMemcpyDeviceToHost);
+    cudaMemcpy(out, dev_out, pic_size, cudaMemcpyDeviceToHost);
   
     char filename[200];
-    sprintf(filename,".//julia_%f_%f.bin",x,y);
+    sprintf(filename,".//julia_%0.2f_%0.2f.bin",x,y);
     FILE * f=fopen(filename,"wb");
     if(f){
         fwrite(out,1,pic_size,f);
