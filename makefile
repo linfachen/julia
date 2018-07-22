@@ -1,2 +1,2 @@
 julia:julia.cu CComplex.h
-    nvcc julia.cu -o julia --std=c++11
+	nvcc julia.cu -o julia --std=c++11

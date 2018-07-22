@@ -9,7 +9,8 @@ def generate_julia(x,y,shape=[1024,1536,3]):
     executable="julia"
     if sys.platform=="win32":
         executable+=".exe"
-        
+    else:
+    	executable ="./"+executable    
     cmd=[executable,str(x),str(y)]
     subprocess.check_output(cmd)
     
